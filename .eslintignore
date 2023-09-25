@@ -1,0 +1,6 @@
+.eslintrc.cjs
+/dist
+vite.config.js
+/node_module
+.husky
+.prettirrc
