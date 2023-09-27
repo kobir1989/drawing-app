@@ -22,6 +22,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-smooth: never;
+  background-color: #6d5dd32c;
 }
 
 /* Resetting the default styles of the HTML elements. */
