@@ -1,26 +1,36 @@
 import styled from '@emotion/styled'
 import { Box, Button, Stack, Typography } from '@mui/material'
 import Slider from '@mui/material/Slider'
+import PropTypes from 'prop-types'
 import { SketchPicker } from 'react-color'
 import Icon from './Icon'
 
-const CustomIconButton = styled('button')(({ theme }) => ({
+const CustomIconButton = styled('button')(({ theme, selected }) => ({
   padding: '0.5rem',
   width: '100%',
   borderRadius: '8px',
-  background: 'none',
+  background: selected === 'on' ? theme.palette.primary.light : 'none',
   border: 'none',
   display: 'flex',
   gap: '0.5rem',
   alignItems: 'flex-start',
   cursor: 'pointer',
   color: theme.palette.primary.main,
+  transition: 'all 0.3s ease',
   '&:hover': {
-    background: theme.palette.primary.light
+    background: theme.palette.primary.light,
+    transition: 'all 0.3s ease-in-out'
   }
 }))
 
-const SideBar = () => {
+const SideBar = ({
+  color,
+  handleSelectedColor,
+  handleSelectedTool,
+  selectedTool,
+  handleSelectedRange,
+  selectedRange
+}) => {
   return (
     <Stack
       gap={2}
@@ -33,34 +43,45 @@ const SideBar = () => {
       })}
     >
       {/* Options  */}
-      <Box>
-        <Typography variant='h4' color='primary' mb={1}>
+      <Stack gap={2}>
+        <Typography variant='h4' color='primary'>
           Options
         </Typography>
-        <CustomIconButton variant='outlined'>
+        <CustomIconButton
+          selected={selectedTool === 'brush' ? 'on' : 'off'}
+          onClick={() => {
+            handleSelectedTool('brush')
+          }}
+        >
           <Icon name='brush' size='1.5rem' />
           <Typography variant='h5'>Brush</Typography>
         </CustomIconButton>
-        <CustomIconButton>
+        <CustomIconButton
+          onClick={() => handleSelectedTool('erage')}
+          selected={selectedTool === 'erage' ? 'on' : 'off'}
+        >
           <Icon name='erage' size='1.5rem' />
           <Typography variant='h5'>Eraser</Typography>
         </CustomIconButton>
         {/* slider */}
         <Box sx={{ width: '100%' }}>
           <Slider
-            defaultValue={50}
+            min={1}
+            max={100}
+            value={selectedRange}
             aria-label='Default'
             valueLabelDisplay='auto'
+            onChange={handleSelectedRange}
           />
         </Box>
-      </Box>
+      </Stack>
 
       {/* Color picker */}
       <Box>
         <Typography variant='h4' color='primary' mb={1}>
           Select Color
         </Typography>
-        <SketchPicker />
+        <SketchPicker color={color} onChange={e => handleSelectedColor(e)} />
       </Box>
       {/* buttons */}
       <Stack mt={6} gap={3}>
@@ -69,6 +90,15 @@ const SideBar = () => {
       </Stack>
     </Stack>
   )
+}
+
+SideBar.propTypes = {
+  color: PropTypes.string.isRequired,
+  handleSelectedColor: PropTypes.func.isRequired,
+  handleSelectedTool: PropTypes.func.isRequired,
+  selectedTool: PropTypes.string.isRequired,
+  handleSelectedRange: PropTypes.func.isRequired,
+  selectedRange: PropTypes.number.isRequired
 }
 
 export default SideBar

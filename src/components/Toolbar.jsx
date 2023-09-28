@@ -1,20 +1,22 @@
 import { IconButton, Stack, Typography } from '@mui/material'
+import PropTypes from 'prop-types'
 import Icon from './Icon'
 
 const toolbarOptions = [
-  { id: 't1', icon: 'circle', label: 'Circle' },
-  { id: 't2', icon: 'square', label: 'Square' },
-  { id: 't3', icon: 'triangle', label: 'Triangle' },
-  { id: 't7', icon: 'line', label: 'Straight Line' },
-  { id: 't9', icon: 'fillColor', label: 'Fill Color' },
-  { id: 't10', icon: 'poligon', label: 'Poligon' },
-  { id: 't4', icon: 'undo', label: 'Undo' },
-  { id: 't5', icon: 'redo', label: 'Redo' }
+  { id: 'circle', icon: 'circle', label: 'Circle' },
+  { id: 'square', icon: 'square', label: 'Square' },
+  { id: 'triangle', icon: 'triangle', label: 'Triangle' },
+  { id: 'line', icon: 'line', label: 'Straight Line' },
+  { id: 'fillColor', icon: 'fillColor', label: 'Fill Color' },
+  { id: 'poligon', icon: 'poligon', label: 'Poligon' },
+  { id: 'undo', icon: 'undo', label: 'Undo' },
+  { id: 'redo', icon: 'redo', label: 'Redo' }
 ]
 
-const ToolBar = () => {
+const ToolBar = ({ handleSelectedTool, selectedTool }) => {
   return (
     <Stack
+      onClick={e => handleSelectedTool(e.target.id)}
       direction='row'
       justifyContent='center'
       alignItems='center'
@@ -29,23 +31,36 @@ const ToolBar = () => {
     >
       {toolbarOptions.map(opt => (
         <IconButton
+          id={opt?.id}
           key={opt?.id}
           disableRipple
           sx={theme => ({
             gap: '0.4rem',
             padding: '5px',
             borderRadius: '4px',
+
+            color:
+              selectedTool === opt.id ? theme.palette.primary.main : '#000',
+            transition: 'all 0.3s ease-in-out',
             '&:hover': {
-              color: theme.palette.primary.main
+              color: theme.palette.primary.main,
+              transition: 'all 0.3s ease-in-out'
             }
           })}
         >
-          <Icon name={opt?.icon} size='1.5rem' />
-          <Typography variant='h5'>{opt?.label}</Typography>
+          <Icon id={opt?.id} name={opt?.icon} size='1.5rem' />
+          <Typography id={opt?.id} variant='h5'>
+            {opt?.label}
+          </Typography>
         </IconButton>
       ))}
     </Stack>
   )
+}
+
+ToolBar.propTypes = {
+  handleSelectedTool: PropTypes.func.isRequired,
+  selectedTool: PropTypes.string.isRequired
 }
 
 export default ToolBar

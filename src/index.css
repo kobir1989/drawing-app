@@ -61,3 +61,7 @@ img {
   overflow-clip-margin: content-box;
   overflow: clip;
 }
+canvas {
+  width: 100%;
+  height: 100%;
+}
