@@ -3,20 +3,19 @@ import PropTypes from 'prop-types'
 import Icon from './Icon'
 
 const toolbarOptions = [
+  { id: 'drag', icon: 'drag', label: 'Position' },
   { id: 'circle', icon: 'circle', label: 'Circle' },
-  { id: 'square', icon: 'square', label: 'Square' },
+  { id: 'rectangle', icon: 'rectangle', label: 'Rectangle' },
   { id: 'triangle', icon: 'triangle', label: 'Triangle' },
   { id: 'line', icon: 'line', label: 'Straight Line' },
-  { id: 'fillColor', icon: 'fillColor', label: 'Fill Color' },
-  { id: 'poligon', icon: 'poligon', label: 'Poligon' },
+
   { id: 'undo', icon: 'undo', label: 'Undo' },
   { id: 'redo', icon: 'redo', label: 'Redo' }
 ]
 
-const ToolBar = ({ handleSelectedTool, selectedTool }) => {
+const ToolBar = ({ onSelectedTool, selectedTool }) => {
   return (
     <Stack
-      onClick={e => handleSelectedTool(e.target.id)}
       direction='row'
       justifyContent='center'
       alignItems='center'
@@ -31,27 +30,25 @@ const ToolBar = ({ handleSelectedTool, selectedTool }) => {
     >
       {toolbarOptions.map(opt => (
         <IconButton
-          id={opt?.id}
+          onClick={() => onSelectedTool(opt?.id)}
           key={opt?.id}
           disableRipple
           sx={theme => ({
             gap: '0.4rem',
-            padding: '5px',
+            padding: '5px 8px',
             borderRadius: '4px',
-
-            color:
-              selectedTool === opt.id ? theme.palette.primary.main : '#000',
+            color: theme.palette.primary.main,
             transition: 'all 0.3s ease-in-out',
+            background:
+              selectedTool === opt.id ? theme.palette.primary.light : 'none',
             '&:hover': {
               color: theme.palette.primary.main,
               transition: 'all 0.3s ease-in-out'
             }
           })}
         >
-          <Icon id={opt?.id} name={opt?.icon} size='1.5rem' />
-          <Typography id={opt?.id} variant='h5'>
-            {opt?.label}
-          </Typography>
+          <Icon name={opt?.icon} size='1.5rem' />
+          <Typography variant='h5'>{opt?.label}</Typography>
         </IconButton>
       ))}
     </Stack>
@@ -59,7 +56,7 @@ const ToolBar = ({ handleSelectedTool, selectedTool }) => {
 }
 
 ToolBar.propTypes = {
-  handleSelectedTool: PropTypes.func.isRequired,
+  onSelectedTool: PropTypes.func.isRequired,
   selectedTool: PropTypes.string.isRequired
 }
 

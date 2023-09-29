@@ -14,15 +14,5 @@ export const palette = {
     main: '#000', // black
     dark: '#AAA', // Gray
     light: '#FFF' // White
-  },
-  error: {
-    main: '#FF2B2B', //red
-    light: '#FFD4D4', // light - red
-    dark: '#FD3E77' // Dark - (pink)
-  },
-  success: {
-    main: '#3EB760', // green
-    dark: '#006400', // dark - green
-    light: '#DDF5E4' // light - green
   }
 }

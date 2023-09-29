@@ -1,5 +1,8 @@
+ 
 import styled from '@emotion/styled'
 import { Box, Button, Stack, Typography } from '@mui/material'
+import Checkbox from '@mui/material/Checkbox'
+import FormControlLabel from '@mui/material/FormControlLabel'
 import Slider from '@mui/material/Slider'
 import PropTypes from 'prop-types'
 import { SketchPicker } from 'react-color'
@@ -25,11 +28,15 @@ const CustomIconButton = styled('button')(({ theme, selected }) => ({
 
 const SideBar = ({
   color,
-  handleSelectedColor,
-  handleSelectedTool,
+  onSelectedColor,
+  onSelectedTool,
   selectedTool,
-  handleSelectedRange,
-  selectedRange
+  onSelectedRange,
+  selectedRange,
+  checkedFillColor,
+  onFillColor,
+  onResetCanvas,
+  onSaveImage
 }) => {
   return (
     <Stack
@@ -50,19 +57,39 @@ const SideBar = ({
         <CustomIconButton
           selected={selectedTool === 'brush' ? 'on' : 'off'}
           onClick={() => {
-            handleSelectedTool('brush')
+            onSelectedTool('brush')
           }}
         >
           <Icon name='brush' size='1.5rem' />
           <Typography variant='h5'>Brush</Typography>
         </CustomIconButton>
         <CustomIconButton
-          onClick={() => handleSelectedTool('erage')}
+          onClick={() => onSelectedTool('erage')}
           selected={selectedTool === 'erage' ? 'on' : 'off'}
         >
           <Icon name='erage' size='1.5rem' />
           <Typography variant='h5'>Eraser</Typography>
         </CustomIconButton>
+        {/* check fill color */}
+        <Box>
+          <FormControlLabel
+            control={
+              <Checkbox
+                sx={theme => ({
+                  color: theme.palette.primary.main,
+                  ml: '4px'
+                })}
+                checked={checkedFillColor}
+                onChange={onFillColor}
+              />
+            }
+            label={
+              <Typography variant='h5' color='primary'>
+                Fill Color
+              </Typography>
+            }
+          />
+        </Box>
         {/* slider */}
         <Box sx={{ width: '100%' }}>
           <Slider
@@ -71,7 +98,7 @@ const SideBar = ({
             value={selectedRange}
             aria-label='Default'
             valueLabelDisplay='auto'
-            onChange={handleSelectedRange}
+            onChange={onSelectedRange}
           />
         </Box>
       </Stack>
@@ -81,24 +108,33 @@ const SideBar = ({
         <Typography variant='h4' color='primary' mb={1}>
           Select Color
         </Typography>
-        <SketchPicker color={color} onChange={e => handleSelectedColor(e)} />
+        <SketchPicker color={color} onChange={e => onSelectedColor(e)} />
       </Box>
       {/* buttons */}
       <Stack mt={6} gap={3}>
-        <Button variant='outlined'>Reset Canvas</Button>
-        <Button variant='contained'>Save as Image</Button>
+        <Button variant='outlined' onClick={onResetCanvas}>
+          Reset Canvas
+        </Button>
+        <Button variant='contained' onClick={onSaveImage}>
+          Save as Image
+        </Button>
       </Stack>
     </Stack>
   )
 }
 
+// Props Types
 SideBar.propTypes = {
   color: PropTypes.string.isRequired,
-  handleSelectedColor: PropTypes.func.isRequired,
-  handleSelectedTool: PropTypes.func.isRequired,
+  onSelectedColor: PropTypes.func.isRequired,
+  onSelectedTool: PropTypes.func.isRequired,
   selectedTool: PropTypes.string.isRequired,
-  handleSelectedRange: PropTypes.func.isRequired,
-  selectedRange: PropTypes.number.isRequired
+  onSelectedRange: PropTypes.func.isRequired,
+  selectedRange: PropTypes.number.isRequired,
+  checkedFillColor: PropTypes.bool.isRequired,
+  onFillColor: PropTypes.func.isRequired,
+  onResetCanvas: PropTypes.func.isRequired,
+  onSaveImage: PropTypes.func.isRequired
 }
 
 export default SideBar

@@ -5,6 +5,7 @@ import ChangeHistoryOutlinedIcon from '@mui/icons-material/ChangeHistoryOutlined
 import CheckBoxOutlineBlankSharpIcon from '@mui/icons-material/CheckBoxOutlineBlankSharp'
 import CreateIcon from '@mui/icons-material/Create'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import HighlightAltIcon from '@mui/icons-material/HighlightAlt'
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule'
 import RadioButtonCheckedSharpIcon from '@mui/icons-material/RadioButtonCheckedSharp'
 import RedoIcon from '@mui/icons-material/Redo'
@@ -20,13 +21,14 @@ const icons = {
   drow: CreateIcon,
   erage: AutoFixHighIcon,
   save: SaveIcon,
-  square: CheckBoxOutlineBlankSharpIcon,
+  rectangle: CheckBoxOutlineBlankSharpIcon,
   circle: Brightness1OutlinedIcon,
   triangle: ChangeHistoryOutlinedIcon,
   line: HorizontalRuleIcon,
   brush: BrushIcon,
   poligon: StarBorderSharpIcon,
-  fillColor: RadioButtonCheckedSharpIcon
+  fillColor: RadioButtonCheckedSharpIcon,
+  drag: HighlightAltIcon
 }
 
 const Icon = props => {

@@ -1,13 +1,17 @@
 import { Container, Stack } from '@mui/material'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 import Canvas from './components/Canvas'
 import SideBar from './components/SideBar'
 import ToolBar from './components/Toolbar'
+import { useCanvasContest } from './hooks/useCanvasContext'
 
 function App() {
   const [selectedColor, setSelectedColor] = useState('#000')
   const [selectedTool, setSelectdTool] = useState('brush')
   const [selectedRange, setSelectedRange] = useState(5)
+  const [checkedFillColor, setCheckedFillColor] = useState(false)
+  const { canvasRef, context } = useCanvasContest()
 
   // Handle Selected Color (*color picker)
   const handleSelectedColor = e => {
@@ -24,6 +28,45 @@ function App() {
     setSelectedRange(newValue)
   }
 
+  // Handle Checked fill color
+  const handleCheckedFillColor = e => {
+    setCheckedFillColor(e.target.value)
+  }
+
+  //Save Dwrawing as PNG Image
+  const hadleSaveImage = () => {
+    const link = document.createElement('a')
+    // convert canvas content to data URL (PNG format by default)
+    const dataURL = canvasRef.current.toDataURL()
+    // Set the href and download attributes for the anchor element
+    link.href = dataURL
+    link.download = `${uuidv4()}.png`
+    // click to trigger download
+    link.click()
+  }
+
+  //set canvas background
+  const setCanvasBackGround = useCallback(() => {
+    if (context) {
+      context.fillStyle = '#FFF'
+      context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+      context.fillStyle = selectedColor
+    }
+  }, [canvasRef, context, selectedColor])
+
+  // Reset Canvas handler
+  const handleResetCanvas = () => {
+    if (context) {
+      context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+      // reset canvas background
+      setCanvasBackGround()
+    }
+  }
+
+  useEffect(() => {
+    // setCanvasBackGround()
+  }, [setCanvasBackGround])
+
   return (
     <Container
       maxWidth='xl'
@@ -37,18 +80,29 @@ function App() {
     >
       <SideBar
         color={selectedColor}
-        handleSelectedColor={handleSelectedColor}
-        handleSelectedTool={handleSelectedTool}
+        onSelectedColor={handleSelectedColor}
+        onSelectedTool={handleSelectedTool}
         selectedTool={selectedTool}
-        handleSelectedRange={handleSelectedRange}
+        onSelectedRange={handleSelectedRange}
         selectedRange={selectedRange}
+        onFillColor={handleCheckedFillColor}
+        checkedFillColor={checkedFillColor}
+        onResetCanvas={handleResetCanvas}
+        onSaveImage={hadleSaveImage}
       />
       <Stack gap={3}>
         <ToolBar
-          handleSelectedTool={handleSelectedTool}
+          onSelectedTool={handleSelectedTool}
           selectedTool={selectedTool}
         />
-        <Canvas selectedRange={selectedRange} selectedColor={selectedColor} />
+        <Canvas
+          selectedRange={selectedRange}
+          selectedColor={selectedColor}
+          selectedTool={selectedTool}
+          checkedFillColor={checkedFillColor}
+          canvasRef={canvasRef}
+          context={context}
+        />
       </Stack>
     </Container>
   )
