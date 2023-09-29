@@ -2,12 +2,13 @@
 import { Box } from '@mui/material'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 // Global Variables
 let PREV_MOUSE_X
 let PREV_MOUSE_Y
 let SNAP_SHOT
-
+let CURRENT_SNAP_SHOT
 const Canvas = React.memo(
   ({
     selectedRange,
@@ -15,7 +16,8 @@ const Canvas = React.memo(
     selectedTool,
     checkedFillColor,
     canvasRef,
-    context
+    context,
+    setUndoArray
   }) => {
     const [isDrawing, setIsDrawing] = useState(false)
 
@@ -160,6 +162,14 @@ const Canvas = React.memo(
 
     // Stop Drawing (triggers every on onMouseUp event)
     const stopDrawing = () => {
+      CURRENT_SNAP_SHOT = context.getImageData(
+        0,
+        0,
+        canvasRef.current.width,
+        canvasRef.current.height
+      )
+      CURRENT_SNAP_SHOT.id = uuidv4()
+      setUndoArray(prev => [...prev, CURRENT_SNAP_SHOT])
       setIsDrawing(false)
     }
 
@@ -193,7 +203,8 @@ Canvas.propTypes = {
   selectedTool: PropTypes.string.isRequired,
   checkedFillColor: PropTypes.bool.isRequired,
   canvasRef: PropTypes.object.isRequired,
-  context: PropTypes.object
+  context: PropTypes.object,
+  setUndoArray: PropTypes.func
 }
 
 export default Canvas

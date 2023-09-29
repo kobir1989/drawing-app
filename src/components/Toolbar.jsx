@@ -1,19 +1,37 @@
+import styled from '@emotion/styled'
 import { IconButton, Stack, Typography } from '@mui/material'
 import PropTypes from 'prop-types'
 import Icon from './Icon'
+
+const StyledIconButton = styled(IconButton)(({ theme, bg }) => ({
+  gap: '0.4rem',
+  padding: '5px 8px',
+  borderRadius: '4px',
+  color: theme.palette.primary.main,
+  transition: 'all 0.3s ease-in-out',
+  background: bg === 'true' ? theme.palette.primary.light : 'none',
+  '&:hover': {
+    color: theme.palette.primary.main,
+    transition: 'all 0.3s ease-in-out'
+  }
+}))
 
 const toolbarOptions = [
   { id: 'drag', icon: 'drag', label: 'Position' },
   { id: 'circle', icon: 'circle', label: 'Circle' },
   { id: 'rectangle', icon: 'rectangle', label: 'Rectangle' },
   { id: 'triangle', icon: 'triangle', label: 'Triangle' },
-  { id: 'line', icon: 'line', label: 'Straight Line' },
-
-  { id: 'undo', icon: 'undo', label: 'Undo' },
-  { id: 'redo', icon: 'redo', label: 'Redo' }
+  { id: 'line', icon: 'line', label: 'Straight Line' }
 ]
 
-const ToolBar = ({ onSelectedTool, selectedTool }) => {
+const ToolBar = ({
+  onSelectedTool,
+  selectedTool,
+  onUndoDrawing,
+  onRedoDrawing,
+  undoLength,
+  redoLength
+}) => {
   return (
     <Stack
       direction='row'
@@ -29,35 +47,47 @@ const ToolBar = ({ onSelectedTool, selectedTool }) => {
       })}
     >
       {toolbarOptions.map(opt => (
-        <IconButton
+        <StyledIconButton
           onClick={() => onSelectedTool(opt?.id)}
           key={opt?.id}
           disableRipple
-          sx={theme => ({
-            gap: '0.4rem',
-            padding: '5px 8px',
-            borderRadius: '4px',
-            color: theme.palette.primary.main,
-            transition: 'all 0.3s ease-in-out',
-            background:
-              selectedTool === opt.id ? theme.palette.primary.light : 'none',
-            '&:hover': {
-              color: theme.palette.primary.main,
-              transition: 'all 0.3s ease-in-out'
-            }
-          })}
+          bg={selectedTool === opt?.id ? 'true' : ''}
         >
           <Icon name={opt?.icon} size='1.5rem' />
           <Typography variant='h5'>{opt?.label}</Typography>
-        </IconButton>
+        </StyledIconButton>
       ))}
+      {/* Undo Button */}
+      <StyledIconButton
+        onClick={onUndoDrawing}
+        disableRipple
+        disabled={undoLength < 0}
+        sx={{ '&:hover': { background: '#F0EEFF' } }}
+      >
+        <Icon name='undo' size='1.5rem' />
+        <Typography variant='h5'>Undo</Typography>
+      </StyledIconButton>
+      {/* Redo Button */}
+      <StyledIconButton
+        sx={{ '&:hover': { background: '#F0EEFF' } }}
+        onClick={onRedoDrawing}
+        disableRipple
+        disabled={redoLength < 0}
+      >
+        <Icon name='redo' size='1.5rem' />
+        <Typography variant='h5'>Redo</Typography>
+      </StyledIconButton>
     </Stack>
   )
 }
 
 ToolBar.propTypes = {
   onSelectedTool: PropTypes.func.isRequired,
-  selectedTool: PropTypes.string.isRequired
+  selectedTool: PropTypes.string.isRequired,
+  onUndoDrawing: PropTypes.func.isRequired,
+  onRedoDrawing: PropTypes.func,
+  undoLength: PropTypes.number,
+  redoLength: PropTypes.number
 }
 
 export default ToolBar
