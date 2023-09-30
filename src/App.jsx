@@ -1,4 +1,4 @@
-import { Container, Stack } from '@mui/material'
+import { Container, Stack, Typography } from '@mui/material'
 import { useCallback, useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import Canvas from './components/Canvas'
@@ -91,49 +91,57 @@ function App() {
   }, [handleResetCanvas])
 
   return (
-    <Container
-      maxWidth='xl'
-      sx={theme => ({
-        [theme.breakpoints.up('md')]: {
-          display: 'flex',
-          gap: '2rem',
-          marginTop: '2rem'
-        }
-      })}
-    >
-      <SideBar
-        color={selectedColor}
-        onSelectedColor={handleSelectedColor}
-        onSelectedTool={handleSelectedTool}
-        selectedTool={selectedTool}
-        onSelectedRange={handleSelectedRange}
-        selectedRange={selectedRange}
-        onFillColor={handleCheckedFillColor}
-        checkedFillColor={checkedFillColor}
-        onResetCanvas={handleResetCanvas}
-        onSaveImage={hadleSaveImage}
-      />
-      <Stack gap={3}>
-        <ToolBar
+    <main>
+      <Container
+        maxWidth='xl'
+        sx={theme => ({
+          [theme.breakpoints.up('md')]: {
+            display: 'flex',
+            gap: '2rem',
+            marginTop: '2rem'
+          }
+        })}
+      >
+        <SideBar
+          color={selectedColor}
+          onSelectedColor={handleSelectedColor}
           onSelectedTool={handleSelectedTool}
           selectedTool={selectedTool}
-          onUndoDrawing={handleUndoDrawing}
-          onRedoDrawing={handleRedoDrawing}
-          undoLength={undoArray?.length - 1}
-          redoLength={redoArray?.length - 1}
-        />
-        <Canvas
+          onSelectedRange={handleSelectedRange}
           selectedRange={selectedRange}
-          selectedColor={selectedColor}
-          selectedTool={selectedTool}
+          onFillColor={handleCheckedFillColor}
           checkedFillColor={checkedFillColor}
-          canvasRef={canvasRef}
-          context={context}
-          undoArray={undoArray}
-          setUndoArray={setUndoArray}
+          onResetCanvas={handleResetCanvas}
+          onSaveImage={hadleSaveImage}
         />
-      </Stack>
-    </Container>
+        <Stack gap={3} width='100%'>
+          <ToolBar
+            onSelectedTool={handleSelectedTool}
+            selectedTool={selectedTool}
+            onUndoDrawing={handleUndoDrawing}
+            onRedoDrawing={handleRedoDrawing}
+            undoLength={undoArray?.length - 1}
+            redoLength={redoArray?.length - 1}
+          />
+          <Canvas
+            selectedRange={selectedRange}
+            selectedColor={selectedColor}
+            selectedTool={selectedTool}
+            checkedFillColor={checkedFillColor}
+            canvasRef={canvasRef}
+            context={context}
+            undoArray={undoArray}
+            setUndoArray={setUndoArray}
+          />
+        </Stack>
+      </Container>
+      <footer>
+        <Typography variant='body2' mt={1}>
+          &#9400; {new Date().getFullYear()} | Kabir Hossain -
+          Kobir.h.ritu@gmail.com
+        </Typography>
+      </footer>
+    </main>
   )
 }
 

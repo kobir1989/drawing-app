@@ -48,23 +48,14 @@ export const typography = {
     lineHeight: '1.4375rem',
     letterSpacing: '0.2px',
     fontFamily: 'Open Sans, sans-serif',
-    fontWeight: '400',
-    '@media (max-width: 600px)': {
-      fontSize: '0.87rem',
-      lineHeight: '1.2rem',
-      letterSpacing: '0.2px'
-    }
+    fontWeight: '400'
   },
   // extra small fonts
   body2: {
     fontSize: '0.81rem',
     lineHeight: '1.1rem',
     letterSpacing: '0.1px',
-    fontWeight: '300',
-    '@media (max-width: 600px)': {
-      fontSize: '0.78rem',
-      lineHeight: '1rem',
-      letterSpacing: '0.2px'
-    }
+    fontWeight: '500',
+    color: palette.primary.main
   }
 }

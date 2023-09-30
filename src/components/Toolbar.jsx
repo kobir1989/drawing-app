@@ -34,7 +34,7 @@ const ToolBar = ({
   return (
     <Stack
       direction='row'
-      justifyContent='center'
+      justifyContent='space-between'
       alignItems='center'
       gap={2}
       sx={theme => ({

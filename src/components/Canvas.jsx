@@ -181,7 +181,7 @@ const Canvas = React.memo(
           padding: '1rem',
           boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
           borderRadius: '1rem',
-          height: '80vh',
+          height: '75vh',
           width: '100%',
           flex: 1,
           overflow: 'hidden'
