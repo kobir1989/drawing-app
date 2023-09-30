@@ -17,7 +17,6 @@ const StyledIconButton = styled(IconButton)(({ theme, bg }) => ({
 }))
 
 const toolbarOptions = [
-  { id: 'drag', icon: 'drag', label: 'Position' },
   { id: 'circle', icon: 'circle', label: 'Circle' },
   { id: 'rectangle', icon: 'rectangle', label: 'Rectangle' },
   { id: 'triangle', icon: 'triangle', label: 'Triangle' },

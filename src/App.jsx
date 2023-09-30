@@ -1,5 +1,5 @@
 import { Container, Stack } from '@mui/material'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import Canvas from './components/Canvas'
 import SideBar from './components/SideBar'
@@ -32,7 +32,7 @@ function App() {
 
   // Handle Checked fill color
   const handleCheckedFillColor = e => {
-    setCheckedFillColor(e.target.value)
+    setCheckedFillColor(e.target.checked)
   }
 
   //Save Dwrawing as PNG Image
@@ -47,23 +47,13 @@ function App() {
     link.click()
   }
 
-  //set canvas background
-  const setCanvasBackGround = useCallback(() => {
+  // Reset Canvas handler
+  const handleResetCanvas = useCallback(() => {
     if (context) {
       context.fillStyle = '#FFF'
       context.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height)
-      context.fillStyle = selectedColor
     }
-  }, [canvasRef, context, selectedColor])
-
-  // Reset Canvas handler
-  const handleResetCanvas = () => {
-    if (context) {
-      context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
-      // reset canvas background
-      setCanvasBackGround()
-    }
-  }
+  }, [canvasRef, context])
 
   // handle Undo Drowing
   const handleUndoDrawing = () => {
@@ -95,6 +85,10 @@ function App() {
       context.putImageData(lastIndex, 0, 0)
     }
   }
+
+  useEffect(() => {
+    handleResetCanvas()
+  }, [handleResetCanvas])
 
   return (
     <Container

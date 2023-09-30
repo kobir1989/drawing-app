@@ -127,6 +127,7 @@ const Canvas = React.memo(
       canvasRef.current.style.cursor = 'crosshair'
       if (!context) return
       if (!isDrawing) return
+
       context.putImageData(SNAP_SHOT, 0, 0)
 
       // crate create object based on current mouse pointer
