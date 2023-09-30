@@ -1,4 +1,3 @@
- 
 import styled from '@emotion/styled'
 import { Box, Button, Stack, Typography } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox'
