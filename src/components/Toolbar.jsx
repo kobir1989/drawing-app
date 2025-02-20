@@ -20,7 +20,8 @@ const toolbarOptions = [
   { id: 'circle', icon: 'circle', label: 'Circle' },
   { id: 'rectangle', icon: 'rectangle', label: 'Rectangle' },
   { id: 'triangle', icon: 'triangle', label: 'Triangle' },
-  { id: 'line', icon: 'line', label: 'Straight Line' }
+  { id: 'line', icon: 'line', label: 'Straight Line' },
+  { id: 'hand', icon: 'hand', label: 'Hand' }
 ]
 
 const ToolBar = ({

@@ -5,13 +5,13 @@ import ChangeHistoryOutlinedIcon from '@mui/icons-material/ChangeHistoryOutlined
 import CheckBoxOutlineBlankSharpIcon from '@mui/icons-material/CheckBoxOutlineBlankSharp'
 import CreateIcon from '@mui/icons-material/Create'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import HighlightAltIcon from '@mui/icons-material/HighlightAlt'
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule'
 import RadioButtonCheckedSharpIcon from '@mui/icons-material/RadioButtonCheckedSharp'
 import RedoIcon from '@mui/icons-material/Redo'
 import SaveIcon from '@mui/icons-material/Save'
 import StarBorderSharpIcon from '@mui/icons-material/StarBorderSharp'
 import UndoIcon from '@mui/icons-material/Undo'
+import BackHandIcon from '@mui/icons-material/BackHand'
 import PropTypes from 'prop-types'
 
 const icons = {
@@ -28,7 +28,7 @@ const icons = {
   brush: BrushIcon,
   poligon: StarBorderSharpIcon,
   fillColor: RadioButtonCheckedSharpIcon,
-  drag: HighlightAltIcon
+  hand: BackHandIcon
 }
 
 const Icon = props => {
